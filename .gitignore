@@ -3,3 +3,6 @@
 *.filters
 *.user
 *.sln
+*.exe
+/bin-int/Debug-x64/C-Visual-Sorter
+/bin/Debug-x64/C-Visual-Sorter
