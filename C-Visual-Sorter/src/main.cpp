@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "sort.h"
 
 using namespace std;
@@ -30,12 +31,64 @@ int main()
         return 0;
     }
 
-    Graph newGraph(size);
-
     numCompares = 0;
     numSwaps = 0;
 
     //Implement OpenGl
+
+    GLFWwindow* window;
+
+    /* Initialize the library */
+    if (!glfwInit())
+        return -1;
+
+    /* Create a windowed mode window and its OpenGL context */
+    window = glfwCreateWindow(1000, 800, "C++ Visual Sorter", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
+    }
+
+    Graph newGraph(size, window);
+
+    cout << "Window Created." << endl;
+    /*
+    /* Make the window's context current */
+    glfwMakeContextCurrent(window);
+
+    //glewInit();
+
+    bool hasSorted = false;
+    
+    /* Loop until the user closes the window */
+    while (!glfwWindowShouldClose(window))
+    {
+        //Render here
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        newGraph.render();
+
+        if (hasSorted == false)
+        { 
+            newGraph.bubbleSort();
+            hasSorted = true;
+        }
+
+        //Swap front and back buffers
+        glfwSwapBuffers(window);
+
+        //Poll for and process events
+        glfwPollEvents();
+
+        break;
+    }
+
+    cout << "Finished." << endl;
+
+    newGraph.delay(10);
+    
+    glfwTerminate();
 
 	return 0;
 }
