@@ -70,9 +70,16 @@ int main()
         newGraph.render();
 
         if (hasSorted == false)
-        { 
-            newGraph.bubbleSort();
+        {
             hasSorted = true;
+
+            /*newGraph.bubbleSort();
+            newGraph.resetArray();
+            newGraph.delay(100);
+            newGraph.insertionSort();
+            newGraph.resetArray();
+            newGraph.delay(100);*/
+            newGraph.quickSort(0, size - 1);
         }
 
         //Swap front and back buffers
@@ -86,7 +93,7 @@ int main()
 
     cout << "Finished." << endl;
 
-    newGraph.delay(10);
+    newGraph.delay(200);
     
     glfwTerminate();
 

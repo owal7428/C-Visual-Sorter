@@ -17,17 +17,24 @@ class Graph
 		void swap(int first, int second);
 		void printAll();
 		void delay(int time);
+		void resetArray();
 
 		//Visual component (OpenGL)
 		void render();
 
 		//Sorting algorithms
 		void bubbleSort();
+		void insertionSort();
+		void quickSort(int low, int high);
 
 	private:
 		//Array used for sorting
 		int *graphArray;
-		
+		int* graphArray_messy;
+
 		int graphSize;
 		GLFWwindow* window;
+
+		//Helper for quicksort
+		int partition(int low, int high);
 };

@@ -21,6 +21,13 @@ Graph::Graph(int size, GLFWwindow* windowPass)
 		//Random number generator between 10 and 100
 		graphArray[i] = rand() % (100 - 10 + 1) + 10;
 	}
+
+	graphArray_messy = new int[graphSize];
+
+	for (int i = 0; i < graphSize; i++)
+	{
+		graphArray_messy[i] = graphArray[i];
+	}
 }
 
 //Destructor
@@ -58,6 +65,14 @@ void Graph::delay(int time)
 	using namespace std::chrono;
 
 	sleep_until(system_clock::now() + milliseconds(time * 10));
+}
+
+void Graph::resetArray()
+{
+	for (int i = 0; i < graphSize; i++)
+	{
+		graphArray[i] = graphArray_messy[i];
+	}
 }
 
 void Graph::render()
@@ -132,5 +147,62 @@ void Graph::bubbleSort()
 			if (graphArray[j] > graphArray[j + 1])
 				swap(j, j + 1);
 		}
+	}
+}
+
+void Graph::insertionSort()
+{
+	int key, j;
+
+	for (int i = 1; i < graphSize; i++)
+	{
+		key = graphArray[i];
+		j = i - 1;
+
+		while (j >= 0 && graphArray[j] > key)
+		{
+			graphArray[j + 1] = graphArray[j];
+			j = j - 1;
+
+			render();
+		}
+
+		graphArray[j + 1] = key;
+
+		render();
+	}
+}
+
+int Graph::partition(int low, int high)
+{
+	int pivot = graphArray[high];
+	int i = (low - 1);
+
+	for (int j = low; j <= high - 1; j++)
+	{
+		if (graphArray[j] < pivot)
+		{
+			i++;
+			swap(i, j);
+
+			render();
+		}
+	}
+
+	swap(i + 1, high);
+
+	render();
+
+	return (i + 1);
+}
+
+void Graph::quickSort(int low, int high)
+{
+	if (low < high)
+	{
+		int pIndex = partition(low, high);
+
+		quickSort(low, pIndex - 1);
+		quickSort(pIndex + 1, high);
 	}
 }
