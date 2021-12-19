@@ -12,6 +12,9 @@ Graph::Graph(int size, GLFWwindow* windowPass)
 	graphSize = size;
 	window = windowPass;
 
+	numCompares = 0;
+	numSwaps = 0;
+
 	graphArray = new int[graphSize];
 
 	srand(time(0));
@@ -112,11 +115,11 @@ void Graph::render()
 		};*/
 
 		// bottom left
-		glColor4f(1, 0, 0, 0);
+		glColor4f(0, 0, 0, 1);
 		glVertex2f(starX, -1);
 
 		// bottom right
-		glColor4f(0, 1, 0, 0);
+		glColor4f(0, 0, 1, 0);
 		glVertex2f(starX + deltaX, -1);
 
 		// top right
@@ -148,6 +151,8 @@ void Graph::bubbleSort()
 				swap(j, j + 1);
 		}
 	}
+
+	render();
 }
 
 void Graph::insertionSort()
@@ -173,6 +178,17 @@ void Graph::insertionSort()
 	}
 }
 
+void Graph::quickSort(int low, int high)
+{
+	if (low < high)
+	{
+		int pIndex = partition(low, high);
+
+		quickSort(low, pIndex - 1);
+		quickSort(pIndex + 1, high);
+	}
+}
+
 int Graph::partition(int low, int high)
 {
 	int pivot = graphArray[high];
@@ -184,25 +200,10 @@ int Graph::partition(int low, int high)
 		{
 			i++;
 			swap(i, j);
-
-			render();
 		}
 	}
 
 	swap(i + 1, high);
 
-	render();
-
 	return (i + 1);
-}
-
-void Graph::quickSort(int low, int high)
-{
-	if (low < high)
-	{
-		int pIndex = partition(low, high);
-
-		quickSort(low, pIndex - 1);
-		quickSort(pIndex + 1, high);
-	}
 }

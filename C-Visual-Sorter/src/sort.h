@@ -27,6 +27,9 @@ class Graph
 		void insertionSort();
 		void quickSort(int low, int high);
 
+		int numCompares;
+		int numSwaps;
+
 	private:
 		//Array used for sorting
 		int *graphArray;

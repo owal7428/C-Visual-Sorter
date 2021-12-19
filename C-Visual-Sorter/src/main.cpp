@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    int size, numCompares, numSwaps;
+    int size, choice, numCompares, numSwaps;
 
 	cout << "Number of bars sorted (Between 10 and 500): ";
 	cin >> size;
@@ -31,8 +31,24 @@ int main()
         return 0;
     }
 
-    numCompares = 0;
-    numSwaps = 0;
+    cout << endl;
+    cout << "----Algorithms----" << endl;
+    cout << endl;
+    cout << "1. Bubble Sort" << endl;
+    cout << "2. Insertion Sort" << endl;
+    cout << "3. Quick Sort" << endl;
+    cout << endl;
+    cout << "Choose an algorithm: ";
+
+    cin >> choice;
+
+    if (cin.fail() || choice > 3 || choice < 1)
+    {
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+        cout << "Invalid input." << endl;
+        return 0;
+    }
 
     //Implement OpenGl
 
@@ -58,8 +74,6 @@ int main()
     glfwMakeContextCurrent(window);
 
     //glewInit();
-
-    bool hasSorted = false;
     
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -69,16 +83,16 @@ int main()
 
         newGraph.render();
 
-        if (hasSorted == false)
+        if (choice == 1)
         {
-            hasSorted = true;
-
-            /*newGraph.bubbleSort();
-            newGraph.resetArray();
-            newGraph.delay(100);
+            newGraph.bubbleSort();
+        }
+        else if (choice == 2)
+        {
             newGraph.insertionSort();
-            newGraph.resetArray();
-            newGraph.delay(100);*/
+        }
+        else
+        {
             newGraph.quickSort(0, size - 1);
         }
 
