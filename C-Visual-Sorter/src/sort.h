@@ -36,6 +36,7 @@ class Graph
 		int* graphArray_messy;
 
 		int graphSize;
+		bool completed;
 		GLFWwindow* window;
 
 		//Helper for quicksort

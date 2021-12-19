@@ -15,6 +15,8 @@ Graph::Graph(int size, GLFWwindow* windowPass)
 	numCompares = 0;
 	numSwaps = 0;
 
+	completed = false;
+
 	graphArray = new int[graphSize];
 
 	srand(time(0));
@@ -87,8 +89,6 @@ void Graph::render()
 	//Loops through and prints out every item in array
 	for (int i = 0; i < graphSize; i++)
 	{
-		glBegin(GL_POLYGON);
-
 		//Getting correct position for vertices using left riemann sum formula (Calculus 1 was actually useful, wow!)
 		float deltaX = (float) (2 / (float) graphSize);
 		float starX = (float) (deltaX * i - 1);
@@ -96,34 +96,40 @@ void Graph::render()
 		//Converts number from 0 to 100 to a number from -1 to 1
 		float height = (float) ((float) (graphArray[i] * 2) / 100) - 1;
 
-		//Newer OpenGL vertex buffer to be implemented
-		/*
-		//Vertex buffer
-		float positions[8] =
-		{
-			//Bottom left vertex position
-			starX, -1.0f,
+		//Creates rectangle with fill color of white
+		glBegin(GL_POLYGON);
 
-			//Bottom right
-			starX + deltaX, -1.0f,
+		// bottom left
+		glColor4f(1, 1, 1, 1);
+		glVertex2f(starX, -1);
 
-			//Top right
-			starX + deltaX, height,
+		// bottom right
+		glColor4f(1, 1, 1, 1);
+		glVertex2f(starX + deltaX, -1);
 
-			//Top left
-			starX, height
-		};*/
+		// top right
+		glColor4f(1, 1, 1, 1);
+		glVertex2f(starX + deltaX, height);
+
+		// top left
+		glColor4f(1, 1, 1, 1);
+		glVertex2f(starX, height);
+
+		glEnd();
+
+		//Creates black outline for rectangles
+		glBegin(GL_LINE_LOOP);
 
 		// bottom left
 		glColor4f(0, 0, 0, 1);
 		glVertex2f(starX, -1);
 
 		// bottom right
-		glColor4f(0, 0, 1, 0);
+		glColor4f(0, 0, 0, 1);
 		glVertex2f(starX + deltaX, -1);
 
 		// top right
-		glColor4f(0, 0, 1, 0);
+		glColor4f(0, 0, 0, 1);
 		glVertex2f(starX + deltaX, height);
 
 		// top left
@@ -153,6 +159,8 @@ void Graph::bubbleSort()
 	}
 
 	render();
+
+	completed = true;
 }
 
 void Graph::insertionSort()
@@ -176,6 +184,8 @@ void Graph::insertionSort()
 
 		render();
 	}
+
+	completed = true;
 }
 
 void Graph::quickSort(int low, int high)
@@ -187,6 +197,8 @@ void Graph::quickSort(int low, int high)
 		quickSort(low, pIndex - 1);
 		quickSort(pIndex + 1, high);
 	}
+
+	completed = true;
 }
 
 int Graph::partition(int low, int high)
